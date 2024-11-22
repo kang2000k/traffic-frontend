@@ -8,7 +8,7 @@ import '../Styles/Button.css';
 
 const Renew = () => {
   const navigate = useNavigate();
-  const [searchParams] = useState(new URLSearchParams(window.location.search));
+  const [searchParams] = useSearchParams();
 
   useEffect(() => {
     const code = searchParams.get('code');
