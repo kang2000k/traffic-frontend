@@ -15,6 +15,17 @@ const GetDriveServiceAccess = () => {
     if (code) {
       handleCallback(code);
     }
+
+    const status = searchParams.get('status');
+    if (status) {
+            if (status === 'success') {
+                alert('Get Google Drive access successfully!');
+                navigate('/dashboard');
+            } else if (status === 'failed') {
+                alert('Get Google Drive access failed!');
+                navigate('/dashboard');
+            }
+        }
   }, [searchParams]);
 
   const handleRenew = async () => {
@@ -32,7 +43,7 @@ const GetDriveServiceAccess = () => {
 
   const handleCallback = async (code) => {
     try {
-      const response = await axios.get('https://traffic-backend-n4iz.onrender.com/callbackG',
+      const response = await axios.post('https://traffic-backend-n4iz.onrender.com/callbackG',
         { code }
       );
 
@@ -60,7 +71,7 @@ const GetDriveServiceAccess = () => {
       <div className="GetAccess-content" >
         <div style={{ border: '2px solid black', padding: '10px', margin: '50px 0', borderRadius: '5px',
         display: 'flex', justifyContent: 'center', Items: 'center', textAlign: 'center'}}>
-          <button onClick={() => handleRenew()}>
+          <button onClick={handleRenew}>
             <h1>Get Google Drive Service Access 🔑</h1>
           </button>
         </div>
