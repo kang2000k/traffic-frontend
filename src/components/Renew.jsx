@@ -31,7 +31,7 @@ const Renew = () => {
 
   const handleCallback = async (code) => {
     try {
-      const response = await axios.post('https://traffic-backend-n4iz.onrender.com/callbackR',
+      const response = await axios.get('https://traffic-backend-n4iz.onrender.com/callbackR',
         { code }
       );
 
