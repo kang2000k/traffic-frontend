@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from 'axios';
 import '../Styles/Login.css';
 import Top_Bar from "./Top-bar";
@@ -8,22 +8,48 @@ import '../Styles/Button.css';
 
 const Renew = () => {
   const navigate = useNavigate();
+  const [searchParams] = useState(new URLSearchParams(window.location.search));
+
+  useEffect(() => {
+    const code = searchParams.get('code');
+    if (code) {
+      handleCallback(code);
+    }
+  }, [searchParams]);
 
   const handleRenew = async () => {
     try {
-      // Send the POST request to the Flask API
-      const response = await axios.get('https://traffic-backend-n4iz.onrender.com/renew');
-      console.log('API response message:', response.data.message);
-      if (response.status === 200) {
-        alert(response.data.message);
-        navigate('/dashboard');
-      }
-  } catch (error) {
+        const response = await axios.post('https://traffic-backend-n4iz.onrender.com/renew', {});
+        const { auth_url } = response.data;
+
+        window.location.href = auth_url;
+    } catch (error) {
         alert('Renew failed!');
         navigate('/dashboard');
-  }
-};
+    }
+  };
 
+  const handleCallback = async (code) => {
+    try {
+      const response = await axios.post('https://traffic-backend-n4iz.onrender.com/callbackR',
+        { code }
+      );
+
+      if (response.status === 200) {
+        alert('Google Drive access renewed successfully!');
+        // Redirect to dashboard after a short delay
+        setTimeout(() => {
+          navigate('/dashboard');
+        }, 1500);
+      } else {
+        alert('Renew failed!');
+        navigate('/dashboard');
+      }
+    } catch (error) {
+      alert('Renew failed!');
+      navigate('/dashboard');
+    }
+  };
 
   return (
     <div className="Renew">
