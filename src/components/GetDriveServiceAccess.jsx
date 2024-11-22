@@ -32,7 +32,7 @@ const GetDriveServiceAccess = () => {
 
   const handleCallback = async (code) => {
     try {
-      const response = await axios.post('https://traffic-backend-n4iz.onrender.com/callbackG',
+      const response = await axios.get('https://traffic-backend-n4iz.onrender.com/callbackG',
         { code }
       );
 
