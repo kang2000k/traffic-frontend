@@ -13,7 +13,7 @@ const GetDriveServiceAccess = () => {
   useEffect(() => {
     const code = searchParams.get('code');
     if (code) {
-      handleCallback(code);
+      await handleCallback(code);
     }
   }, [searchParams]);
 
